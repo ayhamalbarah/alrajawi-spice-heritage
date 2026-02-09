@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import StorySection from "@/components/StorySection";
@@ -8,14 +9,16 @@ import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
 
 const Index = () => {
+  const [searchQuery, setSearchQuery] = useState("");
+
   return (
     <div className="min-h-screen font-cairo" dir="rtl">
-      <Header />
+      <Header searchQuery={searchQuery} onSearchChange={setSearchQuery} />
       <main>
         <Hero />
         <StorySection />
         <FeaturesSection />
-        <ProductsSection />
+        <ProductsSection searchQuery={searchQuery} />
         <BranchesSection />
       </main>
       <Footer />

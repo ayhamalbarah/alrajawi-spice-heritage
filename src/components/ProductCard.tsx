@@ -1,6 +1,8 @@
 import { motion } from "framer-motion";
-import { ShoppingCart } from "lucide-react";
+import { ShoppingBag } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useCart } from "@/contexts/CartContext";
+import { toast } from "sonner";
 import type { Product } from "@/data/products";
 
 interface ProductCardProps {
@@ -9,11 +11,14 @@ interface ProductCardProps {
 }
 
 const ProductCard = ({ product, index }: ProductCardProps) => {
-  const handleWhatsAppOrder = () => {
-    const message = encodeURIComponent(
-      `مرحباً، أرغب في طلب:\n\n📦 المنتج: ${product.name}\n💰 السعر: ${product.price.toLocaleString()} ريال\n\nشكراً لكم - بهارات الرجوي`
-    );
-    window.open(`https://wa.me/9671255358?text=${message}`, "_blank");
+  const { addItem } = useCart();
+
+  const handleAddToCart = () => {
+    addItem(product);
+    toast.success("تمت الإضافة للسلة", {
+      description: product.name,
+      duration: 2000,
+    });
   };
 
   return (
@@ -35,19 +40,15 @@ const ProductCard = ({ product, index }: ProductCardProps) => {
           <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
           
           {/* Quick Add Button */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileHover={{ opacity: 1, y: 0 }}
-            className="absolute bottom-4 left-4 right-4 opacity-0 group-hover:opacity-100 transition-all duration-300"
-          >
+          <div className="absolute bottom-4 left-4 right-4 opacity-0 group-hover:opacity-100 transition-all duration-300">
             <Button
-              onClick={handleWhatsAppOrder}
+              onClick={handleAddToCart}
               className="w-full gradient-gold text-primary-foreground font-bold rounded-xl"
             >
-              <ShoppingCart className="w-4 h-4 ml-2" />
-              اطلب الآن
+              <ShoppingBag className="w-4 h-4 ml-2" />
+              أضف للسلة
             </Button>
-          </motion.div>
+          </div>
         </div>
 
         {/* Content */}
@@ -70,10 +71,10 @@ const ProductCard = ({ product, index }: ProductCardProps) => {
             <Button
               variant="ghost"
               size="icon"
-              onClick={handleWhatsAppOrder}
+              onClick={handleAddToCart}
               className="text-primary hover:bg-primary/10 rounded-xl"
             >
-              <ShoppingCart className="w-5 h-5" />
+              <ShoppingBag className="w-5 h-5" />
             </Button>
           </div>
         </div>
