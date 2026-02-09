@@ -6,17 +6,33 @@ import ProductCard from "./ProductCard";
 import { cn } from "@/lib/utils";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 
-const ProductsSection = () => {
+interface ProductsSectionProps {
+  searchQuery?: string;
+}
+
+const ProductsSection = ({ searchQuery = "" }: ProductsSectionProps) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
   const [selectedCategory, setSelectedCategory] = useState<string>("الكل");
 
   const filteredProducts = useMemo(() => {
-    if (selectedCategory === "الكل") {
-      return products;
+    let result = products;
+    
+    if (selectedCategory !== "الكل") {
+      result = result.filter((product) => product.category === selectedCategory);
     }
-    return products.filter((product) => product.category === selectedCategory);
-  }, [selectedCategory]);
+    
+    if (searchQuery.trim()) {
+      const query = searchQuery.trim().toLowerCase();
+      result = result.filter(
+        (product) =>
+          product.name.toLowerCase().includes(query) ||
+          product.nameEn.toLowerCase().includes(query)
+      );
+    }
+    
+    return result;
+  }, [selectedCategory, searchQuery]);
 
   const handleCategoryChange = (categoryId: string) => {
     setSelectedCategory(categoryId);
@@ -124,7 +140,7 @@ const ProductsSection = () => {
             className="text-center py-16"
           >
             <p className="text-muted-foreground text-lg">
-              لا توجد منتجات في هذه الفئة
+              {searchQuery ? `لا توجد نتائج لـ "${searchQuery}"` : "لا توجد منتجات في هذه الفئة"}
             </p>
           </motion.div>
         )}
