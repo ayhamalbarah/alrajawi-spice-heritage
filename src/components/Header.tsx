@@ -61,7 +61,7 @@ const Header = ({ searchQuery, onSearchChange }: HeaderProps) => {
         }`}
       >
         <div className="container mx-auto px-4">
-          <div className="flex items-center justify-between h-20">
+        <div className="flex items-center justify-between h-20">
             {/* Logo */}
             <motion.div
               initial={{ opacity: 0, x: 20 }}
@@ -70,10 +70,10 @@ const Header = ({ searchQuery, onSearchChange }: HeaderProps) => {
               className="flex items-center gap-3"
             >
               <div className="flex flex-col items-end">
-                <h1 className="text-2xl md:text-3xl font-bold text-foreground">
+                <h1 className={`text-2xl md:text-3xl font-bold transition-colors duration-300 ${isScrolled ? "text-foreground" : "text-white text-shadow-hero"}`}>
                   بهارات الرجوي
                 </h1>
-                <span className="text-xs font-medium text-primary bg-primary/10 px-2 py-0.5 rounded-full">
+                <span className={`text-xs font-medium px-2 py-0.5 rounded-full transition-colors duration-300 ${isScrolled ? "text-primary bg-primary/10" : "text-white/90 bg-white/15"}`}>
                   منذ 1954
                 </span>
               </div>
@@ -88,10 +88,10 @@ const Header = ({ searchQuery, onSearchChange }: HeaderProps) => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.1 * index }}
                   onClick={() => scrollToSection(link.href)}
-                  className="text-foreground/80 hover:text-primary font-medium transition-colors relative group"
+                  className={`font-medium transition-colors relative group ${isScrolled ? "text-foreground/80 hover:text-primary" : "text-white/90 hover:text-white text-shadow-hero"}`}
                 >
                   {link.name}
-                  <span className="absolute -bottom-1 right-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full" />
+                  <span className={`absolute -bottom-1 right-0 w-0 h-0.5 transition-all duration-300 group-hover:w-full ${isScrolled ? "bg-primary" : "bg-white"}`} />
                 </motion.button>
               ))}
             </nav>
@@ -108,7 +108,7 @@ const Header = ({ searchQuery, onSearchChange }: HeaderProps) => {
                   variant="ghost"
                   size="icon"
                   onClick={handleSearchClick}
-                  className={`text-foreground/70 hover:text-primary hover:bg-primary/10 ${showSearch ? "text-primary bg-primary/10" : ""}`}
+                  className={`transition-colors duration-300 ${isScrolled ? "text-foreground/70 hover:text-primary hover:bg-primary/10" : "text-white/90 hover:text-white hover:bg-white/15"} ${showSearch ? (isScrolled ? "text-primary bg-primary/10" : "text-white bg-white/20") : ""}`}
                 >
                   {showSearch ? <X className="h-5 w-5" /> : <Search className="h-5 w-5" />}
                 </Button>
@@ -116,7 +116,7 @@ const Header = ({ searchQuery, onSearchChange }: HeaderProps) => {
                   variant="ghost"
                   size="icon"
                   onClick={() => setIsCartOpen(true)}
-                  className="text-foreground/70 hover:text-primary hover:bg-primary/10 relative"
+                  className={`relative transition-colors duration-300 ${isScrolled ? "text-foreground/70 hover:text-primary hover:bg-primary/10" : "text-white/90 hover:text-white hover:bg-white/15"}`}
                 >
                   <ShoppingBag className="h-5 w-5" />
                   {totalItems > 0 && (
@@ -133,7 +133,7 @@ const Header = ({ searchQuery, onSearchChange }: HeaderProps) => {
                   variant="ghost"
                   size="icon"
                   onClick={handleSearchClick}
-                  className="text-foreground/70"
+                  className={`transition-colors duration-300 ${isScrolled ? "text-foreground/70" : "text-white/90"}`}
                 >
                   {showSearch ? <X className="h-5 w-5" /> : <Search className="h-5 w-5" />}
                 </Button>
@@ -141,7 +141,7 @@ const Header = ({ searchQuery, onSearchChange }: HeaderProps) => {
                   variant="ghost"
                   size="icon"
                   onClick={() => setIsCartOpen(true)}
-                  className="text-foreground/70 relative"
+                  className={`relative transition-colors duration-300 ${isScrolled ? "text-foreground/70" : "text-white/90"}`}
                 >
                   <ShoppingBag className="h-5 w-5" />
                   {totalItems > 0 && (
@@ -155,7 +155,7 @@ const Header = ({ searchQuery, onSearchChange }: HeaderProps) => {
               {/* Mobile Menu */}
               <Sheet open={isOpen} onOpenChange={setIsOpen}>
                 <SheetTrigger asChild className="lg:hidden">
-                  <Button variant="ghost" size="icon" className="text-foreground">
+                  <Button variant="ghost" size="icon" className={`transition-colors duration-300 ${isScrolled ? "text-foreground" : "text-white"}`}>
                     <Menu className="h-6 w-6" />
                   </Button>
                 </SheetTrigger>
