@@ -54,9 +54,9 @@ const Header = ({ searchQuery, onSearchChange }: HeaderProps) => {
       <motion.header
         initial={{ y: -100 }}
         animate={{ y: 0 }}
-        className={`fixed top-0 right-0 left-0 z-50 transition-all duration-300 ${
+        className={`fixed top-0 right-0 left-0 z-50 transition-all duration-500 ${
           isScrolled
-            ? "bg-card/95 backdrop-blur-md shadow-lg"
+            ? "bg-[hsl(40_30%_85%)] shadow-sm backdrop-blur-sm"
             : "bg-transparent"
         }`}
       >
